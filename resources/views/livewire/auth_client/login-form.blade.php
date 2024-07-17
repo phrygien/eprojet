@@ -51,12 +51,12 @@ new class extends Component {
                         <x-button label="Login" class="btn-primary" type="submit" spinner="submit" icon="o-paper-airplane" />
                     </x-slot:actions>
                 </x-form>
-                <p class="mt-3">Pas de compte? inscrivez vous gratuitement <a href="{{ route('pages:auth:register') }}" class="link link-secondary" wire:navigate>ici</a></p>
+                {{-- <p class="mt-3">Pas de compte? inscrivez vous gratuitement <a href="{{ route('pages:auth:register') }}" class="link link-secondary" wire:navigate>ici</a></p> --}}
             </div>
         </div>
 
 
-        {{-- <div class="flex mt-20">
+        <div class="flex mt-20 mx-auto w-96 text-center">
             <a href="/support-us" wire:key="00780c6e001be6437dd1c8fe3e7c0f7a" class="btn normal-case btn-ghost"
                 type="button" wire:navigate="">
 
@@ -85,7 +85,7 @@ new class extends Component {
             <!--  Force tailwind compile tooltip classes   -->
             <span class="hidden">
                 <span class="lg:tooltip lg:tooltip-left lg:tooltip-right lg:tooltip-bottom lg:tooltip-top"></span>
-            </span> <a href="https://mary-ui.com" wire:key="7d3df731b46ee3bf901beda1a711ec22"
+            </span> <a href="Built with MaryUI" wire:key="7d3df731b46ee3bf901beda1a711ec22"
                 class="btn normal-case btn-ghost !text-pink-500" type="button" target="_blank">
 
                 <!-- SPINNER LEFT -->
@@ -115,6 +115,6 @@ new class extends Component {
             <span class="hidden">
                 <span class="lg:tooltip lg:tooltip-left lg:tooltip-right lg:tooltip-bottom lg:tooltip-top"></span>
             </span>
-        </div> --}}
+        </div>
     </div>
 </div>

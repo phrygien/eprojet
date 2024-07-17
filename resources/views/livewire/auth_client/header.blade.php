@@ -21,7 +21,7 @@ new class extends Component {
         $auth->logout();
 
         $this->redirect(
-            url: route('pages:home'),
+            url: route('pages:auth:login'),
         );
     }
 }; ?>
