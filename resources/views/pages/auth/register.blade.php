@@ -1,3 +1,3 @@
 <x-layouts.page title="Sign into your account">
-    Test
+    <livewire:auth.register-form />
 </x-layouts.page>

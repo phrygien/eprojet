@@ -12,6 +12,12 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::prefix('auth')->as('auth:')->group(static function (): void {
             Route::view('register', 'pages.auth.register')->name('register');
+            Route::view('login', 'pages.auth.login_client')->name('login');
+
         });
+
+        // Route::prefix('auth')->as('auth:')->group(static function (): void {
+        //     Route::view('login', 'pages.auth.login_client')->name('login');
+        // });
     });
 }

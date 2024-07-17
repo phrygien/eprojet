@@ -23,18 +23,18 @@ final class DatabaseSeeder extends Seeder
 
         $tenant->domains()->create(
             attributes: [
-                'domain' => 'treblle.eng.test',
+                'domain' => 'treblle.localhost',
             ],
         );
 
         Tenant::all()->runForEach(function (Tenant $tenant) {
             $user = User::factory()->create([
-                'name' => 'Steve McDougall',
-                'email' => 'juststevemcd@gmail.com',
+                'name' => 'Mecene Phrygien',
+                'email' => 'mecene@gmail.com',
             ]);
 
             Team::factory()->for($user)->create([
-                'name' => 'Developer Relations',
+                'name' => 'Developer Laravel',
                 'logo' => null,
                 'description' => 'The DevRel Team is awesome'
             ]);
