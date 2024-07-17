@@ -16,8 +16,11 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         });
 
-        // Route::prefix('auth')->as('auth:')->group(static function (): void {
-        //     Route::view('login', 'pages.auth.login_client')->name('login');
-        // });
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::prefix('pings')->as('pings:')->group(base_path(
+                path: 'routes/web/abonement.php',
+            ));
+        });
+
     });
 }
