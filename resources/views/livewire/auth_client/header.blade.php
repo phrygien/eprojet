@@ -29,9 +29,9 @@ new class extends Component {
     <x-nav sticky>
         <x-slot:brand>
             {{-- Drawer toggle for "main-drawer" --}}
-            <label for="main-drawer" class="lg:hidden mr-3">
+            {{-- <label for="main-drawer" class="lg:hidden mr-3">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
-            </label>
+            </label> --}}
 
             {{-- Brand --}}
             <div>

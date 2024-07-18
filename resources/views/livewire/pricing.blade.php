@@ -3,7 +3,7 @@
         <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Découvrez les Plans de Tarification de e-ping</h2>
             <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                e-ping vous offre des solutions flexibles et abordables pour gérer efficacement votre école ou votre lycée. Choisissez le plan qui convient le mieux à votre établissement et profitez de nos fonctionnalités avancées.
+                <span class="text-amber-700 font-semibold text-3xl">e-ping </span>vous offre des solutions flexibles et abordables pour gérer efficacement votre école ou votre lycée. Choisissez le plan qui convient le mieux à votre établissement et profitez de nos fonctionnalités avancées.
             </p>
         </div>
         <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
