@@ -50,13 +50,13 @@ new class extends Component {
         {{-- Right side actions --}}
         <x-slot:actions>
             @guest()
-            <x-button label="Nos packs" icon="o-shopping-bag" link="###" class="btn-ghost btn-sm" responsive />
+            <x-button title="Pricing" label="Pricing" icon="o-banknotes" link="{{ route('pages:pings:mes_abonnements')}}" class="btn-ghost btn-sm " responsive />
             {{-- <x-button label="Se connecter" icon="o-user-circle" link="{{ route('pages:auth:login') }}" class="btn-ghost btn-sm" responsive /> --}}
             <x-button label="Get started" icon="o-user" link="{{ route('pages:auth:register')}}" class="btn-ghost btn-sm" responsive />
             @endguest
 
             @auth()
-            <x-button label="Mes abonement" icon="o-heart" link="{{ route('pages:pings:mes_abonnements')}}" class="btn-ghost btn-sm text-amber-500" responsive />
+            <x-button title="Mes abonnements" label="Mes abonement" icon="o-heart" link="{{ route('pages:pings:mes_abonnements')}}" class="btn-ghost btn-sm text-amber-500" responsive />
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

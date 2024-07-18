@@ -12,9 +12,8 @@
     <livewire:styles />
 </head>
 <body class="h-full font-sans antialiased text-slate-900 dark:text-slate-50">
-    <x-toast position="toast-top toast-center" />
+    <x-toast position="toast-bottom toast-right" />
     <livewire:auth_client.header />
-        {{-- The navbar with `sticky` and `full-width` --}}
     {{ $slot }}
     <livewire:scripts />
 </body>

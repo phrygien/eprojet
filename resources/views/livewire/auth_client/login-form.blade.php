@@ -31,7 +31,7 @@ new class extends Component {
         $this->success('Login successful.', 'You are not logged in.', position: 'toast-top-right');
 
         $this->redirect(
-            url: route('pages:home'),
+            url: route('pages:dashboard'),
         );
     }
 

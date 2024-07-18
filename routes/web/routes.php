@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->as('pages:')->group(static function (): void {
-        Route::middleware(['auth'])->group(static function (): void {
-            Route::view('/', 'pages.index')->name('home');
-        });
+        Route::view('/', 'pages.welcome')->name('home');
 
         Route::prefix('auth')->as('auth:')->group(static function (): void {
             Route::view('register', 'pages.auth.register')->name('register');
@@ -17,6 +15,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         });
 
         Route::middleware(['auth'])->group(static function (): void {
+            Route::view('dashboard', 'pages.index')->name('dashboard');
             Route::prefix('pings')->as('pings:')->group(base_path(
                 path: 'routes/web/abonement.php',
             ));
