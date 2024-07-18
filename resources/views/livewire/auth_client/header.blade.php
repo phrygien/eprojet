@@ -50,7 +50,7 @@ new class extends Component {
         {{-- Right side actions --}}
         <x-slot:actions>
             @guest()
-            <x-button title="Pricing" label="Pricing" icon="o-banknotes" link="{{ route('pages:pings:mes_abonnements')}}" class="btn-ghost btn-sm " responsive />
+            <x-button title="Pricing" label="Plans de Tarification" icon="o-banknotes" link="{{ route('pages:pricings')}}" class="btn-ghost btn-sm " responsive />
             {{-- <x-button label="Se connecter" icon="o-user-circle" link="{{ route('pages:auth:login') }}" class="btn-ghost btn-sm" responsive /> --}}
             <x-button label="Get started" icon="o-user" link="{{ route('pages:auth:register')}}" class="btn-ghost btn-sm" responsive />
             @endguest

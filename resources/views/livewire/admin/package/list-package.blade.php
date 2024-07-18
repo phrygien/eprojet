@@ -7,8 +7,8 @@
                 <h3 class="mb-4 text-2xl font-semibold">{{ $package->name }}</h3>
                 <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Best option for personal use & for your next project.</p>
                 <div class="flex justify-center items-baseline my-8">
-                    <span class="mr-2 text-3xl font-extrabold">$29</span>
-                    <span class="text-gray-500 dark:text-gray-400">/month</span>
+                    <span class="mr-2 text-2xl font-extrabold">Ar {{ $package->price }}</span>
+                    <span class="text-gray-500 dark:text-gray-400">/mois</span>
                 </div>
                 <!-- List -->
                 <ul role="list" class="mb-8 space-y-4 text-left">

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Model\Role;
+use App\Models\Role as ModelsRole;
 use Illuminate\Support\Facades\Route;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -29,5 +31,11 @@ foreach (config('tenancy.central_domains') as $domain) {
                 path: 'routes/web/admin.php',
             ));
         });
+
+        Route::view('pricings', 'pages.pricing')->name('pricings');
+        Route::get('pricings/{id}/souscription', function (ModelsRole $pricing, $id) {
+            $pricing = ModelsRole::find($id);
+            return view('pages.pricings.souscription', compact('pricing'));
+        })->name('pricings.souscription');
     });
 }
