@@ -2,9 +2,18 @@
 
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
     use Toast;
+
+    public function mount()
+    {
+        $user = Auth::user();
+        $users = User::where('id', $user->id)->first();
+        $roles = $users->roles;
+    }
 
     public function renew()
     {
@@ -19,6 +28,9 @@ new class extends Component {
 }; ?>
 
 <div>
+    @can('edit-posts')
+        <button>Edit Post</button>
+    @endcan
     <x-header title="Mes abonnements" subtitle="Votres abonnement encours"></x-header>
     <div class="space-y-2">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 gap-3">

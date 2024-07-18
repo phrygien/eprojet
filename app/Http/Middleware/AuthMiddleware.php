@@ -11,6 +11,6 @@ final class AuthMiddleware extends Authenticate
 {
     protected function redirectTo(Request $request): string
     {
-        return route('pages:auth:register');
+        return route('pages:auth:login');
     }
 }

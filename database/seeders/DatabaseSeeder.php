@@ -7,6 +7,8 @@ namespace Database\Seeders;
 use App\Models\Team;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Permission;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,30 +16,42 @@ final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        /** @var Tenant $tenant */
-        $tenant = Tenant::query()->create(
-            attributes: [
-                'id' => 'treblle',
-            ],
-        );
+        $roleAdmin = Role::create(['name' => 'admin']);
+        $roleEditor = Role::create(['name' => 'editor']);
 
-        $tenant->domains()->create(
-            attributes: [
-                'domain' => 'treblle.localhost',
-            ],
-        );
+        $permissionEditPosts = Permission::create(['name' => 'edit-posts']);
+        $permissionDeletePosts = Permission::create(['name' => 'delete-posts']);
 
-        Tenant::all()->runForEach(function (Tenant $tenant) {
-            $user = User::factory()->create([
-                'name' => 'Mecene Phrygien',
-                'email' => 'mecene@gmail.com',
-            ]);
+        $roleAdmin->permissions()->attach([$permissionEditPosts->id, $permissionDeletePosts->id]);
+        $roleEditor->permissions()->attach($permissionEditPosts->id);
 
-            Team::factory()->for($user)->create([
-                'name' => 'Developer Laravel',
-                'logo' => null,
-                'description' => 'The DevRel Team is awesome'
-            ]);
-        });
+        $user = User::find(1);
+        $user->roles()->attach($roleAdmin->id);
+        // /** @var Tenant $tenant */
+        // $tenant = Tenant::query()->create(
+        //     attributes: [
+        //         'id' => 'treblle',
+        //     ],
+        // );
+
+        // $tenant->domains()->create(
+        //     attributes: [
+        //         'domain' => 'treblle.localhost',
+        //     ],
+        // );
+
+        // Tenant::all()->runForEach(function (Tenant $tenant) {
+        //     $user = User::factory()->create([
+        //         'name' => 'Mecene Phrygien',
+        //         'email' => 'mecene@gmail.com',
+        //     ]);
+
+        //     Team::factory()->for($user)->create([
+        //         'name' => 'Developer Laravel',
+        //         'logo' => null,
+        //         'description' => 'The DevRel Team is awesome'
+        //     ]);
+        // });
+
     }
 }
