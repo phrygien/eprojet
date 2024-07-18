@@ -28,9 +28,6 @@ new class extends Component {
 }; ?>
 
 <div>
-    @can('edit-posts')
-        <button>Edit Post</button>
-    @endcan
     <x-header title="Mes abonnements" subtitle="Votres abonnement encours"></x-header>
     <div class="space-y-2">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 gap-3">
