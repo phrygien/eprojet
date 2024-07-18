@@ -10,7 +10,7 @@
             <p class="mb-5">
                 Simplifiez la Gestion de Votre Établissement Scolaire avec des Abonnements Adaptés à Vos Besoins
             </p>
-            <x-button class="btn btn-warning" link="/auth/login">Get Started</x-button>
+            <x-button class="btn btn-warning" link="/auth/login">Demmarer</x-button>
           </div>
         </div>
       </div>
