@@ -46,6 +46,9 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub>
+                <x-menu-item title="Modules" icon="o-archive-box" link="####" />
+                <x-menu-item title="Packages" icon="o-cube" link="{{ route('pages:advanced:packages')}}" />
+                <x-menu-item title="Abonements" icon="o-heart" link="####" />
             </x-menu>
         </x-slot:sidebar>
 
