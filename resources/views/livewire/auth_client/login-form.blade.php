@@ -30,9 +30,17 @@ new class extends Component {
 
         $this->success('Login successful.', 'You are not logged in.', position: 'toast-top-right');
 
-        $this->redirect(
-            url: route('pages:dashboard'),
-        );
+        if(Auth::user()->is_admin == 1) {
+
+            $this->redirect(
+                url: route('pages:advanced:dashboard'),
+            );
+        }else {
+
+            $this->redirect(
+                url: route('pages:dashboard'),
+            );
+        }
     }
 
 }; ?>
