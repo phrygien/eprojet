@@ -92,11 +92,12 @@ final class User extends Authenticatable
 
     public function hasPermission($permission)
     {
-        foreach ($this->roles as $role) {
-            if ($role->permissions->contains('name', $permission)) {
-                return true;
-            }
+        $abonnement = $this->activeAbonnement;
+
+        if ($abonnement && $abonnement->role->permissions->contains('name', $permission)) {
+            return true;
         }
+
         return false;
     }
 
@@ -105,4 +106,15 @@ final class User extends Authenticatable
     {
         return $this->roles->pluck('name')->toArray();
     }
+
+    public function abonnements(): HasMany
+    {
+        return $this->hasMany(Abonnement::class);
+    }
+
+    public function activeAbonnement(): HasOne
+    {
+        return $this->hasOne(Abonnement::class)->where('statut', 1)->where('is_active', true);
+    }
+
 }
