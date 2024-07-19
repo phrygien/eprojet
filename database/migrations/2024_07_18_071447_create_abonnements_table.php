@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('abonnements', function (Blueprint $table) {
             $table->id();
-            $table->date('debut');
-            $table->date('fin');
+            $table->date('debut')->nullable();
+            $table->date('fin')->nullable();
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
             $table->foreignUlid('user_id')->constrained()->onDelete('cascade');
             $table->boolean('is_active')->default(false);

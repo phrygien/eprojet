@@ -29,7 +29,7 @@ new class extends Component {
     <x-nav sticky>
         <x-slot:brand>
             {{-- Drawer toggle for "main-drawer" --}}
-            {{-- <label for="main-drawer" class="lg:hidden mr-3">
+            {{-- <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label> --}}
 
@@ -39,7 +39,7 @@ new class extends Component {
                     <div class="flex items-center gap-1">
                         <img src="https://orange.mary-ui.com/images/orange.png" width="30">
                         <span
-                            class="font-bold text-3xl mr-3 bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent ">
+                            class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text ">
                             e-ping
                         </span>
                     </div>
@@ -49,8 +49,8 @@ new class extends Component {
 
         {{-- Right side actions --}}
         <x-slot:actions>
-            @guest()
             <x-button title="Pricing" label="Plans de Tarification" icon="o-banknotes" link="{{ route('pages:pricings')}}" class="btn-ghost btn-sm " responsive />
+            @guest()
             {{-- <x-button label="Se connecter" icon="o-user-circle" link="{{ route('pages:auth:login') }}" class="btn-ghost btn-sm" responsive /> --}}
             <x-button label="Get started" icon="o-user" link="{{ route('pages:auth:register')}}" class="btn-ghost btn-sm" responsive />
             @endguest
@@ -83,14 +83,14 @@ new class extends Component {
         </x-slot:actions>
     </x-nav>
 
-{{-- <div class="bg-base-100 border-gray-100 border-b sticky top-0 z-10">
-    <div class="flex items-center px-6 py-5 max-w-screen-2xl mx-auto">
-        <div class="flex-1 flex items-center">
+{{-- <div class="sticky top-0 z-10 border-b border-gray-100 bg-base-100">
+    <div class="flex items-center px-6 py-5 mx-auto max-w-screen-2xl">
+        <div class="flex items-center flex-1">
             <a href="/" wire:navigate="">
                 <div class="flex items-center gap-1">
                     <img src="https://orange.mary-ui.com/images/orange.png" width="30">
                     <span
-                        class="font-bold text-3xl mr-3 bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent ">
+                        class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text ">
                         e-ping
                     </span>
                 </div>
@@ -100,7 +100,7 @@ new class extends Component {
 
             @guest()
             <div >
-            <a href="{{ route('pages:auth:login') }}" wire:navigate class="btn normal-case btn-sm btn-ghost"
+            <a href="{{ route('pages:auth:login') }}" wire:navigate class="normal-case btn btn-sm btn-ghost"
                 type="button" >
 
                 <!-- ICON -->
@@ -126,7 +126,7 @@ new class extends Component {
 
             <div wire:snapshot="{&quot;data&quot;:[],&quot;memo&quot;:{&quot;id&quot;:&quot;pxz52VTSJcIj51eb4lyq&quot;,&quot;name&quot;:&quot;store.user.menu&quot;,&quot;path&quot;:&quot;login&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;en&quot;},&quot;checksum&quot;:&quot;fa2fc83b7bcb2b0b9cd9cf30e1a1c0979201b68130bf152cb6d5b335ede8d53e&quot;}"
             wire:effects="[]" wire:id="pxz52VTSJcIj51eb4lyq">
-            <a href="{{ route('pages:auth:register') }}" class="btn normal-case btn-sm btn-ghost"
+            <a href="{{ route('pages:auth:register') }}" class="normal-case btn btn-sm btn-ghost"
                 type="button" wire:navigate="">
 
                 <!-- ICON -->
@@ -157,7 +157,7 @@ new class extends Component {
             <details x-data="{open: false}" @click.outside="open = false" :open="open" class="dropdown">
                 <!-- CUSTOM TRIGGER -->
                 <summary x-ref="button" @click.prevent="open = !open" class="list-none">
-                    <button wire:key="368267870307c1c5d5a1c0959ca99730" class="btn normal-case btn-ghost btn-sm"
+                    <button wire:key="368267870307c1c5d5a1c0959ca99730" class="normal-case btn btn-ghost btn-sm"
                         type="button">
 
                         <span class="block">
@@ -172,7 +172,7 @@ new class extends Component {
                         <span class="hidden lg:block">
                             Abonnements
                         </span>
-                        <span class="badge badge-primary font-mono">0</span>
+                        <span class="font-mono badge badge-primary">0</span>
 
                     </button>
 

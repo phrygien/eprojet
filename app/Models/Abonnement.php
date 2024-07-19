@@ -11,12 +11,14 @@ class Abonnement extends Model
     use HasFactory;
 
     protected $fillable = [
+        'numero_abonnement',
         'debut',
         'fin',
         'user_id',
         'role_id',
         'statut',
-        'is_active'
+        'is_active',
+        'domain_name',
     ];
 
     public function user():BelongsTo

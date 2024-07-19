@@ -12,7 +12,7 @@
     <livewire:styles />
 </head>
 <body class="h-full font-sans antialiased text-slate-900 dark:text-slate-50">
-    <x-toast position="toast-bottom toast-right" />
+    <x-toast position="toast-top toast-right" />
     <livewire:auth_client.header />
     {{ $slot }}
     <livewire:scripts />
