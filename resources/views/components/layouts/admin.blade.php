@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html data-theme="acid">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -16,7 +16,7 @@
             <x-app-brand />
         </x-slot:brand>
         <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden mr-3">
+            <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
         </x-slot:actions>
@@ -48,7 +48,7 @@
                 </x-menu-sub>
                 <x-menu-item title="Modules" icon="o-archive-box" link="####" />
                 <x-menu-item title="Packages" icon="o-cube" link="{{ route('pages:advanced:packages')}}" />
-                <x-menu-item title="Abonements" icon="o-heart" link="####" />
+                <x-menu-item title="Abonements" icon="o-heart" link="{{ route('pages:advanced:abonnements')}}" />
             </x-menu>
         </x-slot:sidebar>
 

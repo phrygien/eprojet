@@ -26,7 +26,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         /**
          * routes admin
          */
-        Route::middleware(['auth', 'permission:edit-posts'])->group(static function (): void {
+        Route::middleware(['auth'])->group(static function (): void {
             Route::prefix('advanced')->as('advanced:')->group(base_path(
                 path: 'routes/web/admin.php',
             ));
