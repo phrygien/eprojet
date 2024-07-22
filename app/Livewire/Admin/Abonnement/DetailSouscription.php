@@ -46,6 +46,7 @@ class DetailSouscription extends Component
         $this->validate();
 
         $tenant = Tenant::create([
+            'id' => $this->domain_name,
             'name' => $this->name,
             'email' => $this->email,
             'user_id' => $this->user_id,
