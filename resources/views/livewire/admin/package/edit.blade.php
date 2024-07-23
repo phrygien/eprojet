@@ -61,13 +61,13 @@ new class extends Component {
     <div class="grid gap-5 lg:grid-cols-2">
         <div>
             <x-form wire:submit="save">
-                <x-input label="Role Name" wire:model="name" />
-                <x-input label="Price" wire:model="price" />
-                <x-input label="User Max" wire:model="max_user" />
-                <x-input label="Student Max" wire:model="max_student"  type="number" chevron/>
-                <x-choices-offline label="My Permissions" wire:model="my_permissions" :options="$permissions" searchable />
+                <x-input label="Nom de la tarification" wire:model="name" />
+                <x-input label="Prix / mois" wire:model="price" />
+                <x-input label="Maximun d'utilisateur" wire:model="max_user" />
+                <x-input label="Nombre d'éleves maximun" wire:model="max_student"  type="number" chevron/>
+                <x-choices-offline label="Les Modules" wire:model="my_permissions" :options="$permissions" searchable />
                 <x-textarea
-                label="Role Description"
+                label="Description"
                 wire:model="description"
                 placeholder="Your story ..."
                 hint="Max 1000 chars"

@@ -1,3 +1,3 @@
 <x-layouts.admin title="Plans de Tarification">
-            <livewire:admin.create />
+    <livewire:admin.create />
 </x-layouts.admin>

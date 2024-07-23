@@ -1,5 +1,5 @@
-<!DOCTYPE html data-theme="acid">
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
@@ -48,7 +48,7 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub> --}}
-                <x-menu-item title="Permissions" icon="o-shield-exclamation" link="####" />
+                <x-menu-item title="Permissions" icon="o-shield-exclamation" link="/advanced/permissions" />
                 <x-menu-item title="Roles" icon="o-shield-check" link="{{ route('pages:advanced:roles')}}" />
                 <x-menu-item title="Abonements" icon="o-heart" link="{{ route('pages:advanced:abonnements')}}" />
             </x-menu>
