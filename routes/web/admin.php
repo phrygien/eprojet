@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::view('dashboard', 'pages.admin.dashboard')->name('dashboard');
-Route::view('packages', 'pages.admin.packages.index')->name('packages');
-Route::view('packages/create', 'pages.admin.packages.create')->name('packages.create');
+Route::view('roles', 'pages.admin.packages.index')->name('roles');
+Route::view('roles/create', 'pages.admin.packages.create')->name('roles.create');
 Route::get('roles/{id}/edit', function (Role $role, $id) {
     $role = Role::find($id);
     return view('pages.admin.packages.edit', compact('role'));

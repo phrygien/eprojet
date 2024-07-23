@@ -44,7 +44,7 @@ new class extends Component {
         $this->role->update($data);
         // Sync selection
         $this->role->permissions()->sync($this->my_permissions);
-        $this->success('Role updated.', redirectTo: '/advanced/packages');
+        $this->success('Role updated.', redirectTo: '/advanced/roles');
     }
 
     public function with(): array

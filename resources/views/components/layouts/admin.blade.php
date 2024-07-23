@@ -49,7 +49,7 @@
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub> --}}
                 <x-menu-item title="Permissions" icon="o-shield-exclamation" link="####" />
-                <x-menu-item title="Roles" icon="o-shield-check" link="{{ route('pages:advanced:packages')}}" />
+                <x-menu-item title="Roles" icon="o-shield-check" link="{{ route('pages:advanced:roles')}}" />
                 <x-menu-item title="Abonements" icon="o-heart" link="{{ route('pages:advanced:abonnements')}}" />
             </x-menu>
         </x-slot:sidebar>
