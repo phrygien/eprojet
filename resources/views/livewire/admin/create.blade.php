@@ -10,7 +10,32 @@ new class extends Component {
     use Toast;
 
     #[Rule('required')]
+    public string $name = '';
+
+    #[Rule('required')]
+    public string $price = '';
+
+    // Optional
+    #[Rule('sometimes')]
+    public ?string $description = null;
+
+    #[Rule('required')]
+    public string $max_user = '';
+
+    #[Rule('required')]
+    public string $max_student = '';
+
+    #[Rule('required')]
     public array $my_permissions = [];
+
+    public function save()
+    {
+        $data = $this->validate();
+        $role = Role::create($data);
+        // Sync selection
+        $role->permissions()->sync($this->my_permissions);
+        $this->success('Role Created.', redirectTo: '/advanced/roles');
+    }
 
     public function with(): array
     {
@@ -22,7 +47,7 @@ new class extends Component {
 }; ?>
 
 <div>
-    <x-header title="Crée Plan" subtitle="Nouvelle Plans de Tarification les abonnements" separator />
+    <x-header title="Crée Role" subtitle="Nouvelle Plans de Tarification les abonnements" separator />
     <div class="grid gap-5 lg:grid-cols-2">
         <div>
             <x-form wire:submit="save">
@@ -31,12 +56,15 @@ new class extends Component {
                 <x-input label="User Max" wire:model="max_user" />
                 <x-input label="Student Max" wire:model="max_student"  type="number" chevron/>
                 <x-choices-offline label="My Permissions" wire:model="my_permissions" :options="$permissions" searchable />
-                <x-editor wire:model="description" label="Role Description" hint="The great biography" value="test" />
+                <x-textarea
+                label="Role Description"
+                wire:model="description"
+                placeholder="Your story ..."
+                hint="Max 1000 chars"
+                rows="5" />
                 <x-slot:actions>
-                    <x-button label="Cancel" link="/users" />
-                    {{-- The important thing here is `type="submit"` --}}
-                    {{-- The spinner property is nice! --}}
-                    <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
+                    <x-button label="Annuler" link="/advanced/roles" />
+                    <x-button label="Enregistrer" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
                 </x-slot:actions>
             </x-form>
         </div>

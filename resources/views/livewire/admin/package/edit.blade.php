@@ -73,7 +73,7 @@ new class extends Component {
                 hint="Max 1000 chars"
                 rows="5" />
                 <x-slot:actions>
-                    <x-button label="Cancel" link="/advanced/packages" />
+                    <x-button label="Cancel" link="/advanced/roles" />
                     {{-- The important thing here is `type="submit"` --}}
                     {{-- The spinner property is nice! --}}
                     <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />

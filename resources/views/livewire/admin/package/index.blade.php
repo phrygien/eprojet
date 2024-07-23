@@ -48,6 +48,7 @@ new class extends Component {
             ['key' => 'price', 'label' => 'Role Price / Mois', 'sortable' => false],
             ['key' => 'max_user', 'label' => 'Nb User Max', 'class' => 'hidden lg:table-cell'],
             ['key' => 'max_student', 'label' => 'Nb Student Max', 'class' => 'hidden lg:table-cell'],
+            ['key' => 'description', 'label' => 'Description', 'class' => 'hidden lg:table-cell'],
         ];
     }
 
@@ -77,7 +78,7 @@ new class extends Component {
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
-            <x-button label="Create" link="/roles/create" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="Create" link="/advanced/roles/create" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
