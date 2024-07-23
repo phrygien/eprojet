@@ -1,0 +1,48 @@
+<?php
+
+use Livewire\Volt\Component;
+use App\Models\Permission;
+use App\Models\Role;
+use Livewire\Attributes\Rule;
+use Mary\Traits\Toast;
+
+new class extends Component {
+    use Toast;
+
+    #[Rule('required')]
+    public array $my_permissions = [];
+
+    public function with(): array
+    {
+        return [
+            'permissions' => Permission::all(), // Available permissions
+        ];
+    }
+
+}; ?>
+
+<div>
+    <x-header title="Crée Plan" subtitle="Nouvelle Plans de Tarification les abonnements" separator />
+    <div class="grid gap-5 lg:grid-cols-2">
+        <div>
+            <x-form wire:submit="save">
+                <x-input label="Role Name" wire:model="name" />
+                <x-input label="Price" wire:model="price" />
+                <x-input label="User Max" wire:model="max_user" />
+                <x-input label="Student Max" wire:model="max_student"  type="number" chevron/>
+                <x-choices-offline label="My Permissions" wire:model="my_permissions" :options="$permissions" searchable />
+                <x-editor wire:model="description" label="Role Description" hint="The great biography" value="test" />
+                <x-slot:actions>
+                    <x-button label="Cancel" link="/users" />
+                    {{-- The important thing here is `type="submit"` --}}
+                    {{-- The spinner property is nice! --}}
+                    <x-button label="Save" icon="o-paper-airplane" spinner="save" type="submit" class="btn-primary" />
+                </x-slot:actions>
+            </x-form>
+        </div>
+        <div>
+            {{-- Get a nice picture from `StorySet` web site --}}
+            <img src="https://flow.mary-ui.com/images/edit-form.png" width="300" class="mx-auto" />
+        </div>
+    </div>
+</div>

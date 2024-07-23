@@ -22,12 +22,17 @@
                 <x-header title="Modules" subtitle="More about the permission for this pack" size="text-2xl" />
             </div>
             <div class="col-span-3 grid gap-3">
-                @foreach ($allpermissions as $permission)
+                <x-choices-offline
+                    label="Permissions"
+                    wire:model="allpermissions"
+                    :options="$allpermissions"
+                    searchable />
+                {{-- @foreach ($allpermissions as $permission)
                 <label>
                     <input type="checkbox" wire:model="permissions" value="{{ $permission->id }}">
                     {{ $permission->name }}
                 </label>
-            @endforeach
+            @endforeach --}}
             </div>
         </div>
 

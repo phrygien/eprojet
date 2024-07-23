@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+    <script src="https://cdn.tiny.cloud/1/YOUR-KEY-HERE/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200/50 dark:bg-base-200">
@@ -41,13 +43,13 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Dashboard" icon="o-sparkles" link="{{ route('pages:advanced:dashboard')}}" />
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
+                <x-menu-item title="Tableau de board" icon="o-sparkles" link="{{ route('pages:advanced:dashboard')}}" />
+                {{-- <x-menu-sub title="Settings" icon="o-cog-6-tooth">
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
-                </x-menu-sub>
-                <x-menu-item title="Modules" icon="o-archive-box" link="####" />
-                <x-menu-item title="Packages" icon="o-cube" link="{{ route('pages:advanced:packages')}}" />
+                </x-menu-sub> --}}
+                <x-menu-item title="Permissions" icon="o-shield-exclamation" link="####" />
+                <x-menu-item title="Roles" icon="o-shield-check" link="{{ route('pages:advanced:packages')}}" />
                 <x-menu-item title="Abonements" icon="o-heart" link="{{ route('pages:advanced:abonnements')}}" />
             </x-menu>
         </x-slot:sidebar>

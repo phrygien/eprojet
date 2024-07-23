@@ -12,8 +12,8 @@ class CreatePackage extends Component
 {
     use Toast;
 
-    public $allpermissions = [];
-    public $permissions = [];
+    public array $allpermissions = [];
+    public array $permissions = [];
 
     #[Validate(['required'])]
     public string $name;
@@ -32,7 +32,9 @@ class CreatePackage extends Component
 
     public function mount(): void
     {
-        $this->allpermissions = Permission::all();
+        $this->allpermissions = Permission::pluck('id', 'name')->toArray();
+
+        //$this->allpermissions = Permission::all();
     }
     public function render()
     {

@@ -3,11 +3,17 @@
 declare(strict_types=1);
 
 use App\Models\Abonnement;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::view('dashboard', 'pages.admin.dashboard')->name('dashboard');
 Route::view('packages', 'pages.admin.packages.index')->name('packages');
 Route::view('packages/create', 'pages.admin.packages.create')->name('packages.create');
+Route::get('roles/{id}/edit', function (Role $role, $id) {
+    $role = Role::find($id);
+    return view('pages.admin.packages.edit', compact('role'));
+})->name('pricings.souscription');
 Route::view('modules', 'pages.admin.packages.modules')->name('modules');
 Route::view('users', 'pages.admin.packages.users')->name('users');
 Route::view('abonnements', 'pages.admin..abonnements.index')->name('abonnements');
