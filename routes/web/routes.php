@@ -5,9 +5,13 @@ declare(strict_types=1);
 use App\Model\Role;
 use App\Models\Role as ModelsRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MVolaCallbackController;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->as('pages:')->group(static function (): void {
+
+        Route::post('/mvola/callback', [MVolaCallbackController::class, 'handleCallback'])->name('mvola.callback');
+
         Route::view('/', 'pages.welcome')->name('home');
 
         Route::prefix('auth')->as('auth:')->group(static function (): void {
@@ -17,7 +21,6 @@ foreach (config('tenancy.central_domains') as $domain) {
         });
 
         Route::middleware(['auth'])->group(static function (): void {
-            Route::view('dashboard', 'pages.index')->name('dashboard');
             Route::prefix('pings')->as('pings:')->group(base_path(
                 path: 'routes/web/abonement.php',
             ));
@@ -26,7 +29,8 @@ foreach (config('tenancy.central_domains') as $domain) {
         /**
          * routes admin
          */
-        Route::middleware(['auth'])->group(static function (): void {
+        Route::middleware(['auth', 'permission:edit-posts'])->group(static function (): void {
+            Route::view('dashboard', 'pages.index')->name('dashboard');
             Route::prefix('advanced')->as('advanced:')->group(base_path(
                 path: 'routes/web/admin.php',
             ));

@@ -117,4 +117,14 @@ final class User extends Authenticatable
         return $this->hasOne(Abonnement::class)->where('statut', 1)->where('is_active', true);
     }
 
+    public function UserhasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('name', $permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

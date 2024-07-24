@@ -65,8 +65,8 @@ new class extends Component {
                     <span class="font-semibold text-red-500"> Pending</span></p>
                 @endif
                 <div>
-                    @if ($abonnement->statut == 1)
-                    <x-button class="btn-primary btn-sm" icon="o-heart" wire:click='renew' title="Renouveler" />
+                    @if ($abonnement->statut != 1)
+                    <x-button class="btn-primary btn-sm" icon="o-heart" link="/pings/payment/abonnement" title="Renouveler" />
                     @endif
                     <x-button label="" class="btn-sm" icon="o-hand-thumb-down" wire:click='desabonnee' title="Desabonner" />
                 </div>

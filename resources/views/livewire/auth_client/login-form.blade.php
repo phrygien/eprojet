@@ -38,7 +38,7 @@ new class extends Component {
         }else {
 
             $this->redirect(
-                url: route('pages:dashboard'),
+                url: route('pages:home'),
             );
         }
     }

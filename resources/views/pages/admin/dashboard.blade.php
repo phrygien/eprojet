@@ -1,7 +1,7 @@
-<x-layouts.admin title="Home">
+<x-layouts.admin title="Home Admin">
     <x-header title="{{ ucfirst(tenant('id')) }} Admin Panel">
         <x-slot:actions>
-            <x-theme-toggle class="btn btn-circle btn-ghost" />
+            {{-- <x-theme-toggle class="btn btn-circle btn-ghost" /> --}}
         </x-slot:actions>
     </x-header>
     <div class="space-y-4">
