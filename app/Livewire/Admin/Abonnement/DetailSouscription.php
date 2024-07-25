@@ -45,30 +45,37 @@ class DetailSouscription extends Component
 
         $this->validate();
 
-        $tenant = Tenant::create([
-            'id' => $this->domain_name,
-            'name' => $this->name,
-            'email' => $this->email,
-            'user_id' => $this->user_id,
-        ]);
+        //verification si id tenant déjà existe dans la base de données
+        $tenant = Tenant::find($this->domain_name);
+        if (!$tenant) {
+            $tenant = Tenant::create([
+                'id' => $this->domain_name,
+                'name' => $this->name,
+                'email' => $this->email,
+                'user_id' => $this->user_id,
+            ]);
 
-        $tenant->domains()->create([
-            'domain' => $this->domain_name.'.'.config('app.domain'),
-        ]);
+            $tenant->domains()->create([
+                'domain' => $this->domain_name.'.'.config('app.domain'),
+            ]);
 
-        $this->abonnement->update([
-            'is_active' => true,
-            'statut' => 1,
-            'debut' => now(),
-            'fin' => now()->addMonth(),
-        ]);
+            $this->abonnement->update([
+                'is_active' => true,
+                'statut' => 1,
+                'debut' => now(),
+                'fin' => now()->addMonth(),
+            ]);
 
 
-        $this->success('Souscription activé !');
+            $this->success('Souscription activé !');
 
-        $this->redirect(
-            url: route('pages:abonnements'),
-        );
+            $this->redirect(
+                url: route('pages:abonnements'),
+            );
+        }else{
+
+            $this->warning('Domaine non disponible !');
+        }
 
     }
 }

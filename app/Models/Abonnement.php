@@ -18,7 +18,8 @@ class Abonnement extends Model
         'role_id',
         'statut',
         'is_active',
-        'domain_name',
+        'amount_total',
+        'duree'
     ];
 
     public function user():BelongsTo

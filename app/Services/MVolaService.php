@@ -32,9 +32,22 @@ class MVolaService
         try {
             $this->mvola = new MVola($credentials, $cache);
         } catch (Exception $e) {
+            //dd($e);
             throw new \Exception($e->getMessage());
         }
     }
+
+
+    public function checkTransactionStatus($serverCorrelationId)
+    {
+        try {
+            $response = $this->mvola->getTransactionStatus($serverCorrelationId);
+            return $response;
+        } catch (Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
 
     public function pay($amount, $payerPhone, $description)
     {
@@ -42,23 +55,28 @@ class MVolaService
         $money = new Money('MGA', $amount);
         $payDetails->amount = $money;
 
+        // user to retreive the amount
         $debit = new KeyValue();
         $debit->addPairObject(new Phone($payerPhone));
         $payDetails->debitParty = $debit;
-
         $payDetails->descriptionText = $description;
+
 
         $meta = new KeyValue();
         $meta->add('partnerName', env('MVOLA_PARTNER_NAME'));
         $payDetails->metadata = $meta;
-
+        //dd($payDetails);
         $this->mvola->setCallbackUrl(env('MVOLA_CALLBACK_URL'));
 
         try {
             $response = $this->mvola->payIn($payDetails);
+            //dd($response);
             return $response;
         } catch (Exception $e) {
+            //dd($e);
             throw new \Exception($e->getMessage());
         }
     }
+
+
 }

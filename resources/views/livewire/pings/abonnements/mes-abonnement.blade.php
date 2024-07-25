@@ -66,7 +66,7 @@ new class extends Component {
                 @endif
                 <div>
                     @if ($abonnement->statut != 1)
-                    <x-button class="btn-primary btn-sm" icon="o-heart" link="/pings/payment/abonnement" title="Renouveler" />
+                    <x-button class="btn-primary btn-sm" icon="o-banknotes" link="/pings/abonement/{{ $abonnement->id }}/payment" title="Payer maintenant" label="Payer maintenant" />
                     @endif
                     <x-button label="" class="btn-sm" icon="o-hand-thumb-down" wire:click='desabonnee' title="Desabonner" />
                 </div>

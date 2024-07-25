@@ -1,13 +1,9 @@
 <?php
 
 use Livewire\Volt\Component;
-use App\Services\API;
+use App\Services\MVolaService;
 use App\Models\Abonnement;
-use App\Models\Transaction;
 use Livewire\Attributes\Rule;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Mary\Traits\Toast;
 new class extends Component {
@@ -29,174 +25,59 @@ new class extends Component {
     {
         $this->abonnement = $abonnement;
         $this->abonnementId = $abonnement->id;
-        $this->amount = intval($abonnement->amount_total);
-        $this->phone = "343500004";//$abonnement->user->phone;
+        $this->amount = 10000;
+        $this->phone = "0343500004";//$abonnement->user->phone;
         $this->description = $abonnement->role->name;
         $this->fill($this->abonnement);
     }
 
-    public function newDateMvola(){
-        $milliseconds = microtime(true);
-    	$timestamp = floor($milliseconds);
-		$uuuu = preg_replace("/\d+\./", "", "$milliseconds");
-		$u = substr($uuuu, 0, 3);
-		return date("Y-m-d\TH:i:s", $timestamp). ".{$u}Z";
-    }
-
     // submit payement
-    public function getPaiement(){
+    public function submitPayment()
+    {
+        $this->validate();
 
-        DB::beginTransaction();
-        $num_transaction = Transaction::genererNumeroTransaction();
         try{
-
-            $partenaire_id = 1;
-            $abonnementId = $this->abonnementId;
-            $numero_tel_telma = $this->phone;
-            $clien_id = Auth::user()->id;
-
-            $montantInfoPayement = 0;
-            $num_transaction = Transaction::genererNumeroTransaction();
-            //recuperation de la commande
-            $abonnement = Abonnement::where('id', $abonnementId)->where('statut', 0)->where('is_active', 0)->first();
-
-            if($abonnement){
-                //verification du montant
-                $montant_detail = $this->amount;
-                if($montant_detail == 0 || $montant_detail == null){
-                    $this->warning("Veuillez verifier votre achat, le détail de votre commande est incorrect");
-                }else{
-
-                    if($abonnement->role->price == $montant_detail){
-
-                        $paiement = new Transaction();
-                        $paiement->numero_transaction = $num_transaction;
-                        $paiement->date_transac = now();
-                        $paiement->num_transac_partenaire = null;
-                        $paiement->partenaire_id = $partenaire_id;
-                        $paiement->abonnement_id = $abonnementId;
-                        $paiement->user_id = $clien_id;
-                        $paiement->montant = $abonnement->role->price;
-                        $paiement->status = 0;
-                        $paiement->save();
-
-                        $montantInfoPayement = intval($abonnement->role->price);
-                        //--------------//
-                        //   using api  //
-                        //--------------//
-
-                        $api = new API();
-                        $dt = $this->newDateMvola();
-
-                        $infopaiemet = $api->sendRequestPayement($numero_tel_telma, $montantInfoPayement, "Paiement Mvola", $dt, $num_transaction);
-
-                        $infopaiemet = json_decode($infopaiemet, true);
-
-                        if(!isset($infopaiemet["errorCode"]) && isset($infopaiemet["status"])){
-                            if($infopaiemet["status"]=="pending"){
-
-                                $paiement->mpgw_token = $infopaiemet['serverCorrelationId'];
-                                $paiement->commentaire = "paiement effectue avec succes";
-                                $paiement->save();
-
-                                DB::commit();
-                                 // Appel à ipn() pour vérifier le statut du paiement
-                                // $this->ipn(new Request([
-                                //     'transactionStatus' => $infopaiemet['status'],
-                                //     'serverCorrelationId' => $infopaiemet['serverCorrelationId'],
-                                //     'transactionReference' => $num_transaction,
-                                //     'requestDate' => $dt,
-                                //     'debitParty' => [['value' => $numero_tel_telma]],
-                                //     'creditParty' => [['value' => env('MVOLA_V2_TEL_A_CREDITER')]]
-                                // ]));
-                                $this->success('paiement effectue avec succes');
-                            }else{
-                                $paiement->status = -1;
-                                $paiement->commentaire = "information envoyée invalide niveau telma";
-                                $paiement->save();
-                                DB::commit();
-                               $this->warning('not_valid');
-                            }
-                        }else{
-                            $paiement->status = -1;
-                            $paiement->commentaire = "information envoyée invalide niveau telma";
-                            $paiement->save();
-                            DB::commit();
-                            $this->warning('not_valid');
-                        }
-
-                    }else{
-                        DB::commit();
-                        $this->warning('montant incorrect');
-                    }
-                }
-
-            }else{
-                DB::commit();
-                $this->warning('abonnement introuvable');
+            $mvolaService = new MVolaService();
+            $response = $mvolaService->pay($this->amount, $this->phone, $this->description);
+            //dd($response);
+            if ($response['status'] == 'pending') {
+                $this->serverCorrelationId = $response['serverCorrelationId'];
+                $this->checkTransactionStatus();
+                //$this->success('Payment successful');
+            } else {
+                $this->error('Payment echoué');
             }
-
         }catch(\Exception $e){
-            DB::rollBack();
-            $this->error('erreur payment');
+            dd($e);
+            Log::error('MVola Payment Error: ' . $e->getMessage());
+           $this->error('Payment failed: ' . $e->getMessage());
         }
     }
 
+    public function checkTransactionStatus()
+    {
+        try {
+            $mvolaService = new MVolaService();
+            $response = $mvolaService->checkTransactionStatus($this->serverCorrelationId);
 
-    function ipn(Request $request){
-
-        DB::beginTransaction();
-
-        $req = $request->all();
-
-        $transactionStatus = $req['transactionStatus'];
-        $serverCorrelationId = $req['serverCorrelationId'];
-        $transactionReference = $req['transactionReference'];
-        $requestDate = $req['requestDate'];
-        $debitTel = $req['debitParty'][0]["value"];
-        $creditTel = $req['creditParty'][0]["value"];
-
-        $transaction = Transaction::where("mpgw_token", $serverCorrelationId)->first();
-        dd($transactionStatus);
-        if($serverCorrelationId != null){
-            if($transactionStatus == "completed"){
-                //recuperation de la commande
-                $abonnement = Abonnement::where('id', $abonnement_id)->first();
-                $abonnement_id = $transaction->abonnement_id;
-
-
-                dd($abonnement);
-                //mise a jour de la transaction
-                $transaction->status = 1;
-                $transaction->num_transac_partenaire = $transactionReference;
-                $transaction->commentaire = "paiement success";
-                $transaction->save();
-
-                //mise a jour de la commande
-                $abonnement->statut = 1;
-                $abonnement->is_active = 1;
-                $abonnement->date_debut = now();
-                $abonnement->date_fin =now()->addMonths(1);
-                $abonnement->save();
-
-                DB::commit();
-
-                return dd($abonnement);
-                // return redirect(env('LINK_ESPACE_CLIENT')."/app/retourfacture?retour=".$transaction->commande_id);
-
-            }else{
-                //echec de la transaction
-                $transaction->status = -1;
-                $transaction->commentaire = "echec paiement telma";
-                $transaction->save();
-                DB::commit();
-                return redirect(env('LINK_ESPACE_CLIENT')."/app/facture?reload=1");
+            if ($response['status'] == 'success') {
+                $abonnement = Abonnement::find($this->abonnementId);
+                if ($abonnement) {
+                    $abonnement->statut = 'payé';
+                    $abonnement->save();
+                }
+                session()->flash('message', 'Payment successful: ' . print_r($response, true));
+            } elseif ($response['status'] == 'failed') {
+                session()->flash('error', 'Payment failed: ' . print_r($response, true));
+            } else {
+                // Si la transaction est toujours en attente, re-vérifie après un délai
+                $this->dispatchBrowserEvent('pollTransactionStatus', ['timeout' => 5000]);
             }
-        }else{
-            DB::rollBack();
-            return redirect(env('LINK_ESPACE_CLIENT')."/app/facture?reload=1");
+        } catch (\Exception $e) {
+            Log::error('MVola Transaction Status Error: ' . $e->getMessage());
+            session()->flash('error', 'Payment status check failed: ' . $e->getMessage());
         }
-        }
+    }
 
 }; ?>
 
@@ -243,7 +124,7 @@ new class extends Component {
                                             </div>
 
                                             <div class="text-sm text-gray-400 truncate">
-                                                Prix : {{ $abonnement->role->price }}
+                                                {{ $abonnement->role->price }}
                                             </div>
                                         </div>
                                     </a>
@@ -251,7 +132,7 @@ new class extends Component {
                                 <a href="/products/2" wire:navigate="">
                                     <div class="flex items-center gap-3 py-3 mary-hideable">
                                         <div class="badge badge-neutral">
-                                            {{ $abonnement->duree }}
+                                            1
                                         </div>
                                     </div>
                                 </a>
@@ -260,8 +141,8 @@ new class extends Component {
                         <hr class="my-5">
 
                         <div class="flex items-center justify-between mx-3">
-                            <div>Montant total à payer</div>
-                            <div class="text-lg font-black">{{ $abonnement->amount_total }} MGA</div>
+                            <div>Montant à payer</div>
+                            <div class="text-lg font-black">{{ $abonnement->role->price }} MGA</div>
                         </div>
                     </div>
                 </div>
@@ -274,14 +155,14 @@ new class extends Component {
                         <div class="flex items-center justify-between">
                             <div>
                                 <div class="text-2xl font-bold ">
-                                    Payment
+                                    Payment Mvola
                                 </div>
                             </div>
                         </div>
                         <hr class="mt-3">
                     </div>
                     <div>
-                        <x-form wire:submit="getPaiement">
+                        <x-form wire:submit="submitPayment">
                             <x-input label="Your Phone" wire:model="phone" disabled />
                             <x-input label="Montant" wire:model="amount" disabled />
                             <x-input label="Description" wire:model="description" disabled />
@@ -289,7 +170,7 @@ new class extends Component {
 
                             <x-slot:actions>
                                 <x-button label="Cancel" />
-                                <x-button label="Payer" class="btn-primary" type="submit" spinner="getPaiement" />
+                                <x-button label="Payer" class="btn-primary" type="submit" spinner="submitPayment" />
                             </x-slot:actions>
                         </x-form>
                     </div>

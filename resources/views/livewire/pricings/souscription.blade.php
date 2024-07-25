@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
 
     <div class="w-full p-5 mx-auto drawer-content lg:p-10">
         <!-- MAIN CONTENT -->
@@ -52,4 +52,36 @@
         </x-form>
     </x-modal>
 
+</div> --}}
+<x-form wire:submit="save">
+<div>
+    <!-- Grid stuff from Tailwind -->
+    <div class="grid gap-5 lg:grid-cols-2">
+        <div>
+            <x-card>
+                <x-header title="{{ $pricing->name }}" subtitle="Basic info from pack" size="text-2xl" separator />
+                <div class="grid gap-3">
+                    <x-input label="Nom Pack" wire:model="name" readonly/>
+                    <x-input label="Description" wire:model="description" readonly/>
+                    <x-input label="Prix Pack" wire:model="price" prefix="AR" inline readonly/>
+                    <x-input label="Max Utilisateurs" wire:model="max_user" type="number" readonly/>
+                    <x-input label="Max Eleves" wire:model="max_student" type="number" readonly/>
+                </div>
+            </x-card>
+        </div>
+        <div>
+            <x-card>
+                <x-header title="Abonnement" subtitle="Basic info from abonnement" size="text-2xl" separator />
+                <div class="grid gap-3">
+                    <x-select label="Durée abonnement" icon-right="o-calendar" :options="$mois" wire:model.live="dure" />
+                    <x-input label="Montant à payer" wire:model="amount_total" prefix="AR" inline readonly/>
+                </div>
+            </x-card>
+        </div>
+    </div>
 </div>
+<x-slot:actions>
+    <x-button label="Annuler" />
+    <x-button label="Valider souscription" class="btn-warning" type="submit" spinner="save" />
+</x-slot:actions>
+</x-form>

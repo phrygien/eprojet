@@ -10,7 +10,7 @@ use App\Http\Controllers\MVolaCallbackController;
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->as('pages:')->group(static function (): void {
 
-        Route::post('/mvola/callback', [MVolaCallbackController::class, 'handleCallback'])->name('mvola.callback');
+        Route::get('/mvola/callback', [MVolaCallbackController::class, 'handleCallback'])->name('mvola.callback');
 
         Route::view('/', 'pages.welcome')->name('home');
 
@@ -29,7 +29,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         /**
          * routes admin
          */
-        Route::middleware(['auth', 'permission:edit-posts'])->group(static function (): void {
+        Route::middleware(['auth'])->group(static function (): void {
             Route::view('dashboard', 'pages.index')->name('dashboard');
             Route::prefix('advanced')->as('advanced:')->group(base_path(
                 path: 'routes/web/admin.php',
