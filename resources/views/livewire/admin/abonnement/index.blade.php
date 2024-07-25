@@ -5,6 +5,7 @@ use App\Models\Abonnement;
 use App\Models\Role;
 use Mary\Traits\Toast;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -44,6 +45,18 @@ new class extends Component {
         }
     }
 
+    // update payment statut
+    public function paid($id): void
+    {
+        $abonnement = Abonnement::find($id);
+        $abonnement->update([
+            'statut' => 1,
+            'is_active' => true,
+            'debut' => Carbon::now()->format('Y-m-d'),
+            'fin' => Carbon::now()->addMonths($abonnement->duree)->format('Y-m-d')
+        ]);
+        $this->success('Abonnement Activé !');
+    }
     // Table headers
     public function headers(): array
     {
@@ -130,7 +143,7 @@ new class extends Component {
             @endscope
 
             @scope('actions', $abonnement)
-            <x-button icon="o-trash" wire:click="delete({{ $abonnement['id'] }})" wire:confirm="Vous etes sure?" spinner class="text-red-500 btn-ghost btn-sm" />
+            <x-button icon="o-trash" wire:click="paid({{ $abonnement['id'] }})" wire:confirm="Vous etes sure?" spinner class="text-red-500 btn-ghost btn-sm" />
             @endscope
         </x-table>
     </x-card>
