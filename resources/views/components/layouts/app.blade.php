@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="acid">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
@@ -16,7 +16,7 @@
             <x-app-brand />
         </x-slot:brand>
         <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden mr-3">
+            <label for="main-drawer" class="mr-3 lg:hidden">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
         </x-slot:actions>
@@ -28,7 +28,7 @@
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
 
             {{-- BRAND --}}
-            <x-app-brand class="ml-5 pt-3" />
+            <x-app-brand class="pt-3 ml-5" />
 
             {{-- MENU --}}
             <x-menu title="{{ null }}" activate-by-route>
@@ -46,6 +46,28 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub>
+                <x-menu-item title="Gestion des classes" icon="o-beaker" link="####" />
+                <x-menu-item title="Gestion des sections" icon="o-archive-box" link="####" />
+                <x-menu-sub title="Gestion des étudiants" icon="o-user-group">
+                    <x-menu-item title="Inscription en ligne" icon="o-book-open" link="{{ route('pages:tenants:settings:profile') }}" />
+                    <x-menu-item title="Suivi statut inscription" icon="o-archive-box" link="####" />
+                </x-menu-sub>
+
+                <x-menu-sub title="Gestion des cours" icon="o-clipboard-document-list">
+                    <x-menu-item title="Matières" icon="o-calendar" link="{{ route('pages:tenants:settings:profile') }}" />
+                    <x-menu-item title="Emplois du temps" icon="o-archive-box" link="####" />
+                </x-menu-sub>
+
+                <x-menu-sub title="Suvi absences & retard" icon="o-calendar">
+                    <x-menu-item title="Suivi des absences" icon="o-calendar" link="{{ route('pages:tenants:settings:profile') }}" />
+                    <x-menu-item title="Suivi des retards" icon="o-archive-box" link="####" />
+                </x-menu-sub>
+
+                <x-menu-sub title="Gestion des enseignants" icon="o-user">
+                    <x-menu-item title="Enseignants" icon="o-calendar" link="{{ route('pages:tenants:settings:profile') }}" />
+                    <x-menu-item title="Affectation enseignant" icon="o-archive-box" link="####" />
+                </x-menu-sub>
+
             </x-menu>
         </x-slot:sidebar>
 

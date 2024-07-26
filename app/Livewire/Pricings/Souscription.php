@@ -109,6 +109,20 @@ class Souscription extends Component
         $this->validate();
         $user = Auth::user();
 
+        //verification si le client ont une abonnement en cours
+        $abonnement = Abonnement::where('user_id', $user->id)->where('is_active', true)->first();
+        if ($abonnement) {
+            $this->warning('Vous avez deja une abonnement actif !');
+            return;
+        }
+
+        //verification si un abonnement dans la meme pricing est deja existant actif
+        $abonnement = Abonnement::where('user_id', $user->id)->where('role_id', $this->pricing->id)->where('is_active', true)->first();
+        if ($abonnement) {
+            $this->warning('Vous avez deja une souscription active sur ce plan !');
+            return;
+        }
+
         //verification si un abonnement dans la meme pricing est deja existant mais non actif
         $abonnement = Abonnement::where('user_id', $user->id)->where('role_id', $this->pricing->id)->where('is_active', false)->first();
         if ($abonnement) {

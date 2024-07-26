@@ -56,7 +56,9 @@ new class extends Component {
             @endguest
 
             @auth()
-            <x-button title="Mes abonnements" label="Mes abonement" icon="o-heart" link="{{ route('pages:pings:mes_abonnements')}}" class="btn-ghost btn-sm text-amber-500" responsive />
+            <x-button title="Mes abonnements" label="Mes abonement" icon="o-heart" link="{{ route('pages:pings:mes_abonnements') }}" class="btn-ghost btn-sm text-amber-500" responsive />
+
+            <x-button title="Database" label="Database" icon="o-circle-stack" link="{{ route('pages:pings:accee_plateforme') }}" class="btn-ghost btn-sm " responsive />
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

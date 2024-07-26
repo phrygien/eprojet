@@ -12,18 +12,21 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class SeedTenantJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $tenant;
+    protected $user_connetced;
     /**
      * Create a new job instance.
      */
     public function __construct(Tenant $tenant)
     {
         $this->tenant = $tenant;
+        $this->user_connetced = Auth::user();
     }
 
     /**
@@ -62,8 +65,8 @@ class SeedTenantJob implements ShouldQueue
         //create user for tenant
         $this->tenant->run(function(){
             User::create([
-                'name' => $this->tenant->name,
-                'email' => $this->tenant->email,
+                'name' => $this->user_connetced->name,
+                'email' => $this->user_connetced->email,
                 'password' => Hash::make($this->tenant->name)
             ]);
         });

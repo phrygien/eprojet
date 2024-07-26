@@ -57,6 +57,7 @@ new class extends Component {
         ]);
         $this->success('Abonnement Activé !');
     }
+
     // Table headers
     public function headers(): array
     {
@@ -93,7 +94,7 @@ new class extends Component {
                 'name' => 'Payé',
             ],
             [
-                'id' => 2,
+                'id' => 0,
                 'name' => 'Non Payé',
             ]
         ];
